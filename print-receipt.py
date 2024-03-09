@@ -3,8 +3,9 @@ from receipt import Receipt
 
 
 def generate_summary(receipt):
-    markdown_table = "|               | Total netto |     X     |\n|---------------|-------------|-----------|\n"
-
+    markdown_table = "|               | Total netto |     X     |\n|:---------------:|:-------------:|:-----------:|\n"
+    markdown_table = """|  | Total netto | X |
+| :---: | :---: | :---: |\n"""
     unique_vat_rates = set(
         product.get_vat_rate() for product in receipt.get_product_list()
     )
@@ -13,7 +14,9 @@ def generate_summary(receipt):
         netto = receipt.calculate_total_netto_sum()
         vat_sum = receipt.calculate_total_vat_sum(vat_rate)
 
-        markdown_table += f"| VAT {vat_rate*100}%        | {netto:10.2f} zl   | {vat_sum:9.2f} zl  |\n"
+        markdown_table += (
+            f"| VAT {vat_rate*100}% | {netto:10.2f} zl | {vat_sum:9.2f} zl |\n"
+        )
 
     return markdown_table
 
